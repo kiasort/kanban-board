@@ -1,0 +1,63 @@
+{
+  "boards": [
+    {
+      "id": 1,
+      "title": "Мой первый проект",
+      "description": "Канбан-доска для управления задачами"
+    }
+  ],
+  "columns": [
+    {
+      "id": 1,
+      "boardId": 1,
+      "title": "To Do",
+      "order": 1
+    },
+    {
+      "id": 2,
+      "boardId": 1,
+      "title": "In Progress",
+      "order": 2
+    },
+    {
+      "id": 3,
+      "boardId": 1,
+      "title": "Done",
+      "order": 3
+    }
+  ],
+  "cards": [
+    {
+      "id": 1,
+      "columnId": 1,
+      "title": "Настроить проект",
+      "description": "Создать Vue 3 + TS проект",
+      "priority": "high",
+      "createdAt": "2026-06-04T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "columnId": 1,
+      "title": "Подключить API",
+      "description": "Настроить JSON Server и слой запросов",
+      "priority": "medium",
+      "createdAt": "2026-06-04T11:00:00Z"
+    },
+    {
+      "id": 3,
+      "columnId": 2,
+      "title": "Создать компоненты",
+      "description": "Board, Column, Card",
+      "priority": "high",
+      "createdAt": "2026-06-04T12:00:00Z"
+    },
+    {
+      "id": 4,
+      "columnId": 3,
+      "title": "Изучить TypeScript",
+      "description": "Базовые типы и интерфейсы",
+      "priority": "low",
+      "createdAt": "2026-06-03T09:00:00Z"
+    }
+  ]
+}
