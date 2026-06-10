@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useBoardStore } from '@/stores/boardStore'
 import { boardsApi } from '@/api/boards'
@@ -29,19 +29,18 @@ import type { Board } from '@/types'
 
 const route = useRoute()
 const store = useBoardStore()
-
 const board = ref<Board | null>(null)
 
 const boardId = computed(() => Number(route.params.id))
 
 onMounted(async () => {
-  board.value = await boardsApi.getById(boardId.value)
+  try {
+    board.value = await boardsApi.getById(boardId.value)
+  } catch (e) {
+    console.error('Ошибка загрузки доски:', e)
+  }
   await store.fetchBoardData(boardId.value)
 })
-</script>
-
-<script lang="ts">
-import { ref } from 'vue'
 </script>
 
 <style scoped>
