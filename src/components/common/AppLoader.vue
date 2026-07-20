@@ -1,5 +1,5 @@
 <template>
-  <div class="loader">
+  <div class="loader" role="status" aria-label="Загрузка">
     <div class="spinner"></div>
     <p>Загрузка...</p>
   </div>
@@ -16,12 +16,13 @@
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #e2e8f0;
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e2e8f0;
   border-top-color: #3b82f6;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
+  will-change: transform;
 }
 
 @keyframes spin {
@@ -31,7 +32,7 @@
 }
 
 p {
-  margin-top: 1rem;
+  margin-top: 0.75rem;
   font-size: 0.875rem;
 }
 </style>

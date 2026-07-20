@@ -1,5 +1,14 @@
 <template>
-  <div class="card" :class="priorityClass" @click="$emit('click', card)">
+  <div
+    class="card"
+    :class="priorityClass"
+    role="button"
+    tabindex="0"
+    :aria-label="`Задача: ${card.title}, приоритет: ${priorityLabel}`"
+    @click="$emit('click', card)"
+    @keydown.enter="$emit('click', card)"
+    @contextmenu="$emit('contextmenu', $event, card)"
+  >
     <div class="card-header">
       <span class="priority-badge" :class="card.priority">
         {{ priorityLabel }}
@@ -27,6 +36,7 @@ const props = defineProps<{
 defineEmits<{
   click: [card: Card]
   delete: [id: number]
+  contextmenu: [event: MouseEvent, card: Card]
 }>()
 
 const priorityLabel = computed(() => {
@@ -50,15 +60,18 @@ const formattedDate = computed(() => {
   border-radius: 8px;
   padding: 1rem;
   cursor: pointer;
-  transition:
-    box-shadow 0.2s,
-    transform 0.15s;
+  transition: box-shadow 0.2s, transform 0.15s;
   border-left: 3px solid transparent;
+  user-select: none;
 }
 
 .card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
+}
+
+.card:active {
+  cursor: grabbing;
 }
 
 .priority-high {

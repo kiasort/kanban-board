@@ -12,7 +12,7 @@ export const useBoardStore = defineStore('board', () => {
   const loading = ref(false)
   const error = ref('')
 
-  // Загрузить все доски
+  // ===== ДОСКИ =====
   async function fetchBoards() {
     loading.value = true
     error.value = ''
@@ -25,7 +25,26 @@ export const useBoardStore = defineStore('board', () => {
     }
   }
 
-  // Загрузить колонки и карточки для конкретной доски
+  async function createBoard(data: { title: string; description: string }) {
+    try {
+      const newBoard = await boardsApi.create(data)
+      boards.value.push(newBoard)
+      return newBoard
+    } catch (e) {
+      error.value = e instanceof Error ? e.message : 'Ошибка создания доски'
+    }
+  }
+
+  async function deleteBoard(id: number) {
+    try {
+      await boardsApi.delete(id)
+      boards.value = boards.value.filter((b) => b.id !== id)
+    } catch (e) {
+      error.value = e instanceof Error ? e.message : 'Ошибка удаления доски'
+    }
+  }
+
+  // ===== ДАННЫЕ ДОСКИ =====
   async function fetchBoardData(boardId: number) {
     loading.value = true
     error.value = ''
@@ -35,7 +54,6 @@ export const useBoardStore = defineStore('board', () => {
         cardsApi.getAll(),
       ])
       columns.value = cols
-      // Фильтруем карточки — оставляем только те, что принадлежат колонкам этой доски
       const columnIds = cols.map((c) => c.id)
       cards.value = allCards.filter((card) => columnIds.includes(card.columnId))
     } catch (e) {
@@ -45,7 +63,30 @@ export const useBoardStore = defineStore('board', () => {
     }
   }
 
-  // Создать карточку
+  // ===== КОЛОНКИ =====
+  async function createColumn(data: { boardId: number; title: string; order: number }) {
+    try {
+      const newColumn = await columnsApi.create(data)
+      columns.value.push(newColumn)
+      // Сортируем по order
+      columns.value.sort((a, b) => a.order - b.order)
+    } catch (e) {
+      error.value = e instanceof Error ? e.message : 'Ошибка создания колонки'
+    }
+  }
+
+  async function deleteColumn(id: number) {
+    try {
+      await columnsApi.delete(id)
+      columns.value = columns.value.filter((c) => c.id !== id)
+      // Удаляем карточки этой колонки из локального состояния
+      cards.value = cards.value.filter((c) => c.columnId !== id)
+    } catch (e) {
+      error.value = e instanceof Error ? e.message : 'Ошибка удаления колонки'
+    }
+  }
+
+  // ===== КАРТОЧКИ =====
   async function createCard(cardData: CreateCard) {
     try {
       const newCard = await cardsApi.create(cardData)
@@ -55,7 +96,6 @@ export const useBoardStore = defineStore('board', () => {
     }
   }
 
-  // Удалить карточку
   async function deleteCard(id: number) {
     try {
       await cardsApi.delete(id)
@@ -65,7 +105,6 @@ export const useBoardStore = defineStore('board', () => {
     }
   }
 
-  // Переместить карточку в другую колонку
   async function moveCard(cardId: number, columnId: number) {
     try {
       const updated = await cardsApi.moveToColumn(cardId, columnId)
@@ -77,8 +116,40 @@ export const useBoardStore = defineStore('board', () => {
       error.value = e instanceof Error ? e.message : 'Ошибка перемещения'
     }
   }
+    // Оптимистичное обновление для drag-and-drop
+  async function moveCardOptimistic(cardId: number, newColumnId: number) {
+    const card = cards.value.find((c) => c.id === cardId)
+    if (!card) return
 
-  // Получить карточки конкретной колонки
+    const oldColumnId = card.columnId
+    card.columnId = newColumnId  // Оптимистично обновляем UI сразу
+
+    try {
+      const updated = await cardsApi.moveToColumn(cardId, newColumnId)
+      const index = cards.value.findIndex((c) => c.id === cardId)
+      if (index !== -1) {
+        cards.value[index] = updated
+      }
+    } catch (e) {
+      // Откатываем при ошибке
+      card.columnId = oldColumnId
+      error.value = e instanceof Error ? e.message : 'Ошибка перемещения'
+    }
+  }
+
+  async function updateCard(id: number, data: Partial<Card>) {
+    try {
+      const updated = await cardsApi.update(id, data)
+      const index = cards.value.findIndex((c) => c.id === id)
+      if (index !== -1) {
+        cards.value[index] = updated
+      }
+      return updated
+    } catch (e) {
+      error.value = e instanceof Error ? e.message : 'Ошибка обновления карточки'
+    }
+  }
+
   function getCardsByColumn(columnId: number): Card[] {
     return cards.value
       .filter((c) => c.columnId === columnId)
@@ -92,10 +163,16 @@ export const useBoardStore = defineStore('board', () => {
     loading,
     error,
     fetchBoards,
+    createBoard,
+    deleteBoard,
     fetchBoardData,
+    createColumn,
+    deleteColumn,
     createCard,
     deleteCard,
     moveCard,
+     moveCardOptimistic,
+    updateCard,
     getCardsByColumn,
   }
 })
