@@ -1,264 +1,102 @@
 {
-  "boards": [
-    {
-      "id": "1",
-      "title": "Мой первый проект",
-      "description": "Канбан-доска для управления задачами"
-    },
-    {
-      "title": "qweqe",
-      "description": "",
-      "id": "SOcd6Iy"
-    },
-    {
-      "title": "231312",
-      "description": "",
-      "id": "7XSOVlf4fJc"
-    }
-  ],
-  "columns": [
-    {
-      "id": "1",
-      "boardId": 1,
-      "title": "To Do",
-      "order": 1
-    },
-    {
-      "id": "2",
-      "boardId": 1,
-      "title": "In Progress",
-      "order": 2
-    },
-    {
-      "id": "3",
-      "boardId": 1,
-      "title": "Done",
-      "order": 3
-    },
-    {
-      "boardId": null,
-      "title": "To Do",
-      "order": 1,
-      "id": "uv5_5HA9ni0"
-    },
-    {
-      "boardId": null,
-      "title": "In Progress",
-      "order": 2,
-      "id": "Xx0qteEOAA0"
-    },
-    {
-      "boardId": null,
-      "title": "Done",
-      "order": 3,
-      "id": "uDoVFvT_Pkc"
-    },
-    {
-      "boardId": "SOcd6Iy",
-      "title": "To Do",
-      "order": 1,
-      "id": "aJi4C87"
-    },
-    {
-      "boardId": "SOcd6Iy",
-      "title": "In Progress",
-      "order": 2,
-      "id": "EIfPPCV"
-    },
-    {
-      "boardId": "SOcd6Iy",
-      "title": "Done",
-      "order": 3,
-      "id": "Rat00Dg"
-    },
-    {
-      "boardId": "7XSOVlf4fJc",
-      "title": "To Do",
-      "order": 1,
-      "id": "UVRBFJ5rf6s"
-    },
-    {
-      "boardId": "7XSOVlf4fJc",
-      "title": "In Progress",
-      "order": 2,
-      "id": "mwzrmudZztA"
-    },
-    {
-      "boardId": "7XSOVlf4fJc",
-      "title": "Done",
-      "order": 3,
-      "id": "I3VEGuy1HhM"
-    }
-  ],
+  "boards": [],
+  "columns": [],
   "cards": [
     {
-      "columnId": "uv5_5HA9ni0",
+      "id": 1,
+      "columnId": 1,
       "title": "Проверить почту",
       "description": "Рабочая почта example@gmail.com",
       "priority": "medium",
-      "createdAt": "2026-07-22T15:48:13.954Z",
-      "id": "4mCIc7GkX2A"
+      "createdAt": "2026-07-22T10:00:00.000Z"
     },
     {
-      "columnId": "uv5_5HA9ni0",
+      "id": 2,
+      "columnId": 1,
       "title": "Выгулять пса",
       "description": "",
       "priority": "low",
-      "createdAt": "2026-07-22T15:48:13.970Z",
-      "id": "kGCJf3J5YWk"
+      "createdAt": "2026-07-22T10:00:01.000Z"
     },
     {
-      "columnId": "uv5_5HA9ni0",
+      "id": 3,
+      "columnId": 1,
       "title": "Купить продукты на неделю",
       "description": "Молоко, хлеб, овощи, фрукты.",
       "priority": "high",
-      "createdAt": "2026-07-22T15:48:13.985Z",
-      "id": "jEVTMjj0MKE"
+      "createdAt": "2026-07-22T10:00:02.000Z"
     },
     {
-      "columnId": "Xx0qteEOAA0",
+      "id": 4,
+      "columnId": 2,
       "title": "Приготовить ужин",
       "description": "Паста с овощами и курицей.",
       "priority": "medium",
-      "createdAt": "2026-07-22T15:48:13.998Z",
-      "id": "iHnRs30iaJE"
+      "createdAt": "2026-07-22T10:00:03.000Z"
     },
     {
-      "columnId": "Xx0qteEOAA0",
+      "id": 5,
+      "columnId": 2,
       "title": "Разобрать шкаф в спальне",
       "description": "Отсортировать вещи на «оставить», «отдать», «выбросить».",
       "priority": "high",
-      "createdAt": "2026-07-22T15:48:14.011Z",
-      "id": "UhWmCjahHhU"
+      "createdAt": "2026-07-22T10:00:04.000Z"
     },
     {
-      "columnId": "uDoVFvT_Pkc",
+      "id": 6,
+      "columnId": 3,
       "title": "Оплатить коммунальные счета",
       "description": "",
       "priority": "high",
-      "createdAt": "2026-07-22T15:48:14.024Z",
-      "id": "7eWPkY4pFQ0"
+      "createdAt": "2026-07-22T10:00:05.000Z"
     },
     {
-      "columnId": "uDoVFvT_Pkc",
+      "id": 7,
+      "columnId": 3,
       "title": "Записаться на приём к врачу",
       "description": "Терапевт, ежегодный чекап.",
       "priority": "medium",
-      "createdAt": "2026-07-22T15:48:14.038Z",
-      "id": "5L_Wteo1wBk"
+      "createdAt": "2026-07-22T10:00:06.000Z"
     },
     {
-      "columnId": "aJi4C87",
+      "columnId": 1,
       "title": "Проверить почту",
       "description": "Рабочая почта example@gmail.com",
       "priority": "medium",
-      "createdAt": "2026-07-22T15:55:33.942Z",
-      "id": "NOHZ4oy"
+      "createdAt": "2026-07-22T16:19:57.500Z",
+      "id": 8
     },
     {
-      "columnId": "aJi4C87",
-      "title": "Выгулять пса",
-      "description": "",
-      "priority": "low",
-      "createdAt": "2026-07-22T15:55:33.958Z",
-      "id": "o96Rdvb"
-    },
-    {
-      "columnId": "aJi4C87",
-      "title": "Купить продукты на неделю",
-      "description": "Молоко, хлеб, овощи, фрукты.",
-      "priority": "high",
-      "createdAt": "2026-07-22T15:55:33.974Z",
-      "id": "fVgVzIG"
-    },
-    {
-      "columnId": "EIfPPCV",
+      "columnId": 2,
       "title": "Приготовить ужин",
       "description": "Паста с овощами и курицей.",
       "priority": "medium",
-      "createdAt": "2026-07-22T15:55:34.006Z",
-      "id": "xPyB8tD"
+      "createdAt": "2026-07-22T16:19:57.531Z",
+      "id": 9
     },
     {
-      "columnId": "EIfPPCV",
+      "columnId": 2,
       "title": "Разобрать шкаф в спальне",
       "description": "Отсортировать вещи на «оставить», «отдать», «выбросить».",
       "priority": "high",
-      "createdAt": "2026-07-22T15:55:34.042Z",
-      "id": "_Okkdmk"
+      "createdAt": "2026-07-22T16:19:57.566Z",
+      "id": 10
     },
     {
-      "columnId": "Rat00Dg",
+      "columnId": 3,
       "title": "Оплатить коммунальные счета",
       "description": "",
       "priority": "high",
-      "createdAt": "2026-07-22T15:55:34.075Z",
-      "id": "gPtSPUA"
+      "createdAt": "2026-07-22T16:19:57.602Z",
+      "id": 11
     },
     {
-      "columnId": "Rat00Dg",
+      "columnId": 3,
       "title": "Записаться на приём к врачу",
       "description": "Терапевт, ежегодный чекап.",
       "priority": "medium",
-      "createdAt": "2026-07-22T15:55:34.108Z",
-      "id": "ddJ2pV8"
-    },
-    {
-      "columnId": "UVRBFJ5rf6s",
-      "title": "Проверить почту",
-      "description": "Рабочая почта example@gmail.com",
-      "priority": "medium",
-      "createdAt": "2026-07-22T15:59:12.929Z",
-      "id": "3AcMbke6fyw"
-    },
-    {
-      "columnId": "UVRBFJ5rf6s",
-      "title": "Выгулять пса",
-      "description": "",
-      "priority": "low",
-      "createdAt": "2026-07-22T15:59:12.946Z",
-      "id": "Wa7JXF3KPEw"
-    },
-    {
-      "columnId": "UVRBFJ5rf6s",
-      "title": "Купить продукты на неделю",
-      "description": "Молоко, хлеб, овощи, фрукты.",
-      "priority": "high",
-      "createdAt": "2026-07-22T15:59:12.962Z",
-      "id": "IZ1OWY55QO0"
-    },
-    {
-      "columnId": "mwzrmudZztA",
-      "title": "Приготовить ужин",
-      "description": "Паста с овощами и курицей.",
-      "priority": "medium",
-      "createdAt": "2026-07-22T15:59:12.977Z",
-      "id": "-sUTO7PBo_A"
-    },
-    {
-      "columnId": "mwzrmudZztA",
-      "title": "Разобрать шкаф в спальне",
-      "description": "Отсортировать вещи на «оставить», «отдать», «выбросить».",
-      "priority": "high",
-      "createdAt": "2026-07-22T15:59:12.991Z",
-      "id": "RAcPnehCtEY"
-    },
-    {
-      "columnId": "I3VEGuy1HhM",
-      "title": "Оплатить коммунальные счета",
-      "description": "",
-      "priority": "high",
-      "createdAt": "2026-07-22T15:59:13.005Z",
-      "id": "xA5eOj738TY"
-    },
-    {
-      "columnId": "I3VEGuy1HhM",
-      "title": "Записаться на приём к врачу",
-      "description": "Терапевт, ежегодный чекап.",
-      "priority": "medium",
-      "createdAt": "2026-07-22T15:59:13.019Z",
-      "id": "-QP8-CVALP8"
+      "createdAt": "2026-07-22T16:19:57.634Z",
+      "id": 12
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

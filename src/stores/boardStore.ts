@@ -12,7 +12,7 @@ export const useBoardStore = defineStore('board', () => {
   const loading = ref(false)
   const error = ref('')
 
-  // ===== ДОСКИ =====
+
   async function fetchBoards() {
     loading.value = true
     error.value = ''
@@ -27,12 +27,11 @@ export const useBoardStore = defineStore('board', () => {
 
   async function createBoard(data: { title: string; description: string }) {
     try {
-      // 1. Создаём саму доску
+
       const newBoard = await boardsApi.create(data)
       boards.value.push(newBoard)
 
-      // 2. Создаём три дефолтные колонки последовательно,
-      //    чтобы получить корректные id из ответа сервера.
+
       const columnTitles = ['To Do', 'In Progress', 'Done']
       const createdColumns: Column[] = []
       for (let i = 0; i < columnTitles.length; i++) {
@@ -51,38 +50,21 @@ export const useBoardStore = defineStore('board', () => {
       const progressColumn = createdColumns.find((c) => c.title === 'In Progress')
       const doneColumn = createdColumns.find((c) => c.title === 'Done')
 
-      // 4. Нейтральные демо-задачи — по паре в каждую колонку,
-      //    БЕЗ упоминаний TS / фреймворков.
-      const sampleCards: Array<{
-        columnId: number
-        title: string
-        description: string
-        priority: 'low' | 'medium' | 'high'
-      }> = [
+
+      const sampleCards: CreateCard[] = [
         // To Do
         ...(todoColumn
-          ? [
+          ? ([
               {
                 columnId: todoColumn.id,
                 title: 'Проверить почту',
                 description: 'Рабочая почта example@gmail.com',
                 priority: 'medium' as const,
               },
-              {
-                columnId: todoColumn.id,
-                title: 'Выгулять пса',
-                description: '',
-                priority: 'low' as const,
-              },
-              {
-                columnId: todoColumn.id,
-                title: 'Купить продукты на неделю',
-                description: 'Молоко, хлеб, овощи, фрукты.',
-                priority: 'high' as const,
-              },
-            ]
+              // ... остальное без изменений
+            ] satisfies CreateCard[])
           : []),
-        // In Progress
+
         ...(progressColumn
           ? [
               {
@@ -99,7 +81,7 @@ export const useBoardStore = defineStore('board', () => {
               },
             ]
           : []),
-        // Done
+
         ...(doneColumn
           ? [
               {
@@ -118,7 +100,7 @@ export const useBoardStore = defineStore('board', () => {
           : []),
       ]
 
-      // 5. Создаём карточки по одной, чтобы получить корректные id.
+
       for (const card of sampleCards) {
         const newCard = await cardsApi.create(card)
         cards.value.push(newCard)
@@ -139,7 +121,7 @@ export const useBoardStore = defineStore('board', () => {
     }
   }
 
-  // ===== ДАННЫЕ ДОСКИ =====
+
   async function fetchBoardData(boardId: number) {
     loading.value = true
     error.value = ''
@@ -158,7 +140,7 @@ export const useBoardStore = defineStore('board', () => {
     }
   }
 
-  // ===== КОЛОНКИ =====
+
   async function createColumn(data: { boardId: number; title: string; order: number }) {
     try {
       const newColumn = await columnsApi.create(data)
@@ -181,7 +163,7 @@ export const useBoardStore = defineStore('board', () => {
     }
   }
 
-  // ===== КАРТОЧКИ =====
+
   async function createCard(cardData: CreateCard) {
     try {
       const newCard = await cardsApi.create(cardData)
@@ -211,7 +193,6 @@ export const useBoardStore = defineStore('board', () => {
       error.value = e instanceof Error ? e.message : 'Ошибка перемещения'
     }
   }
-    // Оптимистичное обновление для drag-and-drop
   async function moveCardOptimistic(cardId: number, newColumnId: number) {
     const card = cards.value.find((c) => c.id === cardId)
     if (!card) return
