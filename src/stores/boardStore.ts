@@ -51,20 +51,29 @@ export const useBoardStore = defineStore('board', () => {
       const doneColumn = createdColumns.find((c) => c.title === 'Done')
 
 
-      const sampleCards: CreateCard[] = [
-        // To Do
+       const sampleCards: CreateCard[] = [
         ...(todoColumn
-          ? ([
+          ? [
               {
                 columnId: todoColumn.id,
                 title: 'Проверить почту',
                 description: 'Рабочая почта example@gmail.com',
                 priority: 'medium' as const,
               },
-              // ... остальное без изменений
-            ] satisfies CreateCard[])
+              {
+                columnId: todoColumn.id,
+                title: 'Выгулять пса',
+                description: '',
+                priority: 'low' as const,
+              },
+              {
+                columnId: todoColumn.id,
+                title: 'Купить продукты на неделю',
+                description: 'Молоко, хлеб, овощи, фрукты.',
+                priority: 'high' as const,
+              },
+            ]
           : []),
-
         ...(progressColumn
           ? [
               {
@@ -81,7 +90,6 @@ export const useBoardStore = defineStore('board', () => {
               },
             ]
           : []),
-
         ...(doneColumn
           ? [
               {

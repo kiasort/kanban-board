@@ -1,6 +1,54 @@
 {
-  "boards": [],
-  "columns": [],
+  "boards": [
+    {
+      "id": 1,
+      "title": "Моя первая канбан-доска",
+      "description": "Канбан-доска для управления задачами"
+    },
+    {
+      "title": "123131",
+      "description": "123123123",
+      "id": 2
+    }
+  ],
+  "columns": [
+    {
+      "id": 1,
+      "boardId": 1,
+      "title": "To Do",
+      "order": 1
+    },
+    {
+      "id": 2,
+      "boardId": 1,
+      "title": "In Progress",
+      "order": 2
+    },
+    {
+      "id": 3,
+      "boardId": 1,
+      "title": "Done",
+      "order": 3
+    },
+    {
+      "boardId": 2,
+      "title": "To Do",
+      "order": 1,
+      "id": 4
+    },
+    {
+      "boardId": 2,
+      "title": "In Progress",
+      "order": 2,
+      "id": 5
+    },
+    {
+      "boardId": 2,
+      "title": "Done",
+      "order": 3,
+      "id": 6
+    }
+  ],
   "cards": [
     {
       "id": 1,
@@ -59,44 +107,60 @@
       "createdAt": "2026-07-22T10:00:06.000Z"
     },
     {
-      "columnId": 1,
+      "columnId": 4,
       "title": "Проверить почту",
       "description": "Рабочая почта example@gmail.com",
       "priority": "medium",
-      "createdAt": "2026-07-22T16:19:57.500Z",
+      "createdAt": "2026-07-22T16:25:06.739Z",
       "id": 8
     },
     {
-      "columnId": 2,
-      "title": "Приготовить ужин",
-      "description": "Паста с овощами и курицей.",
-      "priority": "medium",
-      "createdAt": "2026-07-22T16:19:57.531Z",
+      "columnId": 4,
+      "title": "Выгулять пса",
+      "description": "",
+      "priority": "low",
+      "createdAt": "2026-07-22T16:25:06.770Z",
       "id": 9
     },
     {
-      "columnId": 2,
-      "title": "Разобрать шкаф в спальне",
-      "description": "Отсортировать вещи на «оставить», «отдать», «выбросить».",
+      "columnId": 4,
+      "title": "Купить продукты на неделю",
+      "description": "Молоко, хлеб, овощи, фрукты.",
       "priority": "high",
-      "createdAt": "2026-07-22T16:19:57.566Z",
+      "createdAt": "2026-07-22T16:25:06.806Z",
       "id": 10
     },
     {
-      "columnId": 3,
-      "title": "Оплатить коммунальные счета",
-      "description": "",
-      "priority": "high",
-      "createdAt": "2026-07-22T16:19:57.602Z",
+      "columnId": 5,
+      "title": "Приготовить ужин",
+      "description": "Паста с овощами и курицей.",
+      "priority": "medium",
+      "createdAt": "2026-07-22T16:25:06.827Z",
       "id": 11
     },
     {
-      "columnId": 3,
+      "columnId": 5,
+      "title": "Разобрать шкаф в спальне",
+      "description": "Отсортировать вещи на «оставить», «отдать», «выбросить».",
+      "priority": "high",
+      "createdAt": "2026-07-22T16:25:06.842Z",
+      "id": 12
+    },
+    {
+      "columnId": 6,
+      "title": "Оплатить коммунальные счета",
+      "description": "",
+      "priority": "high",
+      "createdAt": "2026-07-22T16:25:06.868Z",
+      "id": 13
+    },
+    {
+      "columnId": 6,
       "title": "Записаться на приём к врачу",
       "description": "Терапевт, ежегодный чекап.",
       "priority": "medium",
-      "createdAt": "2026-07-22T16:19:57.634Z",
-      "id": 12
+      "createdAt": "2026-07-22T16:25:06.889Z",
+      "id": 14
     }
   ]
 }
