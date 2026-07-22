@@ -2,12 +2,18 @@
   <form class="card-form" @submit.prevent="handleSubmit">
     <div class="field">
       <label>Название *</label>
-      <input v-model="title" type="text" placeholder="Что нужно сделать?" required />
+      <input v-model="title" type="text" placeholder="Что нужно сделать?" maxlength="100" required />
     </div>
 
     <div class="field">
       <label>Описание</label>
-      <textarea v-model="description" placeholder="Подробности задачи..." rows="3"></textarea>
+      <textarea
+        v-model="description"
+        placeholder="Подробности задачи..."
+        rows="3"
+        maxlength="500"
+        @keydown.enter.ctrl.prevent="handleSubmit"
+      ></textarea>
     </div>
 
     <div class="field">

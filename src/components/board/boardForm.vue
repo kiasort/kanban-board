@@ -6,6 +6,7 @@
         v-model="title"
         type="text"
         placeholder="Например: Мой проект"
+        maxlength="50"
         required
         autofocus
       />
@@ -17,7 +18,9 @@
         v-model="description"
         placeholder="Краткое описание доски..."
         rows="2"
-      ></textarea>
+        maxlength="200"
+        @keydown.enter.ctrl.prevent="handleSubmit"
+      ></textarea>>
     </div>
 
     <div class="actions">

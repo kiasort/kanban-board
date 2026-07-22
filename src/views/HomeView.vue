@@ -28,6 +28,13 @@
     <AppModal title="Новая доска" :is-open="showForm" @close="showForm = false">
       <BoardForm @submit="handleCreate" @cancel="showForm = false" />
     </AppModal>
+    <ConfirmDialog
+      :is-open="confirmState.open"
+      :title="`Удалить доску?`"
+      :message="`Доска «${confirmState.title}» и все её колонки и карточки будут потеряны.`"
+      @confirm="handleConfirmDelete"
+      @cancel="confirmState = { open: false, id: null, title: '' }"
+    />
   </div>
 </template>
 
@@ -40,9 +47,15 @@ import AppLoader from '@/components/common/AppLoader.vue'
 import AppError from '@/components/common/AppError.vue'
 import AppEmpty from '@/components/common/AppEmpty.vue'
 import AppModal from '@/components/common/AppModal.vue'
+import ConfirmDialog from '@/components/common/ConfirmDialog.vue'
 
 const store = useBoardStore()
 const router = useRouter()
+const confirmState = ref<{ open: boolean; id: number | null; title: string }>({
+  open: false,
+  id: null,
+  title: '',
+})
 const showForm = ref(false)
 
 onMounted(() => {
@@ -57,10 +70,15 @@ async function handleCreate(data: { title: string; description: string }) {
   }
 }
 
-async function handleDelete(id: number, title: string) {
-  if (confirm(`Удалить доску «${title}»? Все колонки и карточки будут потеряны.`)) {
-    await store.deleteBoard(id)
+function handleDelete(id: number, title: string) {
+  confirmState.value = { open: true, id, title }
+}
+
+async function handleConfirmDelete() {
+  if (confirmState.value.id !== null) {
+    await store.deleteBoard(confirmState.value.id)
   }
+  confirmState.value = { open: false, id: null, title: '' }
 }
 </script>
 

@@ -6,6 +6,7 @@
         v-model="title"
         type="text"
         placeholder="Например: В планах"
+        maxlength="30"
         required
         autofocus
       />

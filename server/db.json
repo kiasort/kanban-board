@@ -4,117 +4,12 @@
       "id": 1,
       "title": "Мой первый проект",
       "description": "Канбан-доска для управления задачами"
-    },
-    {
-      "title": "Мой второй проект",
-      "description": "Канбан-доска для меня",
-      "id": 2
-    },
-    {
-      "title": "и еще энтер для создания",
-      "description": "",
-      "id": 4
-    },
-    {
-      "title": "энтер после описания",
-      "description": "",
-      "id": 5
-    },
-    {
-      "title": "в только что созданныъ досках должно быть три колонки ту ду ин прогрес и дан с некоторыми примерами тасков",
-      "description": "",
-      "id": 6
-    },
-    {
-      "title": "ограничение по символам в названиях и описании",
-      "description": "",
-      "id": 7
     }
   ],
   "columns": [
-    {
-      "id": 1,
-      "boardId": 1,
-      "title": "To Do",
-      "order": 1
-    },
-    {
-      "id": 2,
-      "boardId": 1,
-      "title": "In Progress",
-      "order": 2
-    },
-    {
-      "id": 3,
-      "boardId": 1,
-      "title": "Done",
-      "order": 3
-    },
-    {
-      "boardId": 1,
-      "title": "Testing",
-      "order": 4,
-      "id": 4
-    },
-    {
-      "boardId": 1,
-      "title": "Убрать ущербный ползуное снизу посередине",
-      "order": 5,
-      "id": 5
-    },
-    {
-      "boardId": 2,
-      "title": "цуйу",
-      "order": 1,
-      "id": 6
-    },
-    {
-      "boardId": 2,
-      "title": "цуа",
-      "order": 2,
-      "id": 7
-    }
+    { "id": 1, "boardId": 1, "title": "To Do", "order": 1 },
+    { "id": 2, "boardId": 1, "title": "In Progress", "order": 2 },
+    { "id": 3, "boardId": 1, "title": "Done", "order": 3 }
   ],
-  "cards": [
-    {
-      "id": 2,
-      "columnId": 2,
-      "title": "Подключить API",
-      "description": "Настроить JSON Server и слой запросов",
-      "priority": "high",
-      "createdAt": "2026-06-04T11:00:00Z"
-    },
-    {
-      "id": 4,
-      "columnId": 1,
-      "title": "Изучить TypeScript",
-      "description": "Базовые типы и интерфейсы",
-      "priority": "low",
-      "createdAt": "2026-06-03T09:00:00Z"
-    },
-    {
-      "columnId": 6,
-      "title": "цуауца",
-      "description": "цуацац",
-      "priority": "medium",
-      "createdAt": "2026-07-04T20:11:15.138Z",
-      "id": 5
-    },
-    {
-      "columnId": 2,
-      "title": "когда удаляем задачу убрать модальное окно браузера с вопросом об удалении",
-      "description": "",
-      "priority": "medium",
-      "createdAt": "2026-07-07T14:09:51.367Z",
-      "id": 6
-    },
-    {
-      "columnId": 2,
-      "title": "1214",
-      "description": "Когда меняем приоритет прихожится перезагружать страницу чтобы данные обновились",
-      "priority": "medium",
-      "createdAt": "2026-07-07T14:10:36.301Z",
-      "id": 7
-    }
-  ]
+  "cards": []
 }

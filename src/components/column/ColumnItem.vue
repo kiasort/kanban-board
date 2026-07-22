@@ -99,6 +99,15 @@
       @close="contextMenuCard = null"
       @action="handleContextAction"
     />
+
+    <!-- Диалог подтверждения удаления -->
+    <ConfirmDialog
+      :is-open="confirmState.open"
+      :title="confirmState.title"
+      :message="confirmState.message"
+      @confirm="handleConfirm"
+      @cancel="handleCancelConfirm"
+    />
   </div>
 </template>
 
@@ -112,7 +121,7 @@ import CardForm from '@/components/card/CardForm.vue'
 import CardEditForm from '@/components/card/CardEditForm.vue'
 import AppModal from '@/components/common/AppModal.vue'
 import ContextMenu, { type ContextMenuAction } from '@/components/common/ContextMenu.vue'
-
+import ConfirmDialog from '../common/ConfirmDialog.vue'
 const props = defineProps<{
   column: Column
 }>()
@@ -127,6 +136,69 @@ const editingCard = ref<Card | null>(null)
 const contextMenuCard = ref<Card | null>(null)
 const contextMenuX = ref(0)
 const contextMenuY = ref(0)
+// Диалог подтверждения удаления (карточка или колонка)
+const confirmState = ref<{
+  open: boolean
+  title: string
+  message: string
+  action: 'card' | 'column' | null
+  cardId: number | null
+}>({
+  open: false,
+  title: '',
+  message: '',
+  action: null,
+  cardId: null,
+})
+
+function openConfirmCard(card: Card) {
+  confirmState.value = {
+    open: true,
+    title: 'Удалить задачу?',
+    message: `Задача «${card.title}» будет удалена безвозвратно.`,
+    action: 'card',
+    cardId: card.id,
+  }
+}
+
+function openConfirmColumn() {
+  confirmState.value = {
+    open: true,
+    title: 'Удалить колонку?',
+    message: `Колонка «${props.column.title}» и все задачи в ней будут потеряны.`,
+    action: 'column',
+    cardId: null,
+  }
+}
+
+async function handleConfirm() {
+  if (confirmState.value.action === 'card' && confirmState.value.cardId !== null) {
+    await store.deleteCard(confirmState.value.cardId)
+    // Заодно закрываем модалку с деталями, если открыта
+    if (selectedCard.value?.id === confirmState.value.cardId) {
+      selectedCard.value = null
+    }
+  } else if (confirmState.value.action === 'column') {
+    await store.deleteColumn(props.column.id)
+  }
+  confirmState.value = {
+    open: false,
+    title: '',
+    message: '',
+    action: null,
+    cardId: null,
+  }
+}
+
+function handleCancelConfirm() {
+  confirmState.value = {
+    open: false,
+    title: '',
+    message: '',
+    action: null,
+    cardId: null,
+  }
+}
 
 const storeCards = computed(() => store.getCardsByColumn(props.column.id))
 const localCards = ref<Card[]>([...storeCards.value])
@@ -134,14 +206,13 @@ const localCards = ref<Card[]>([...storeCards.value])
 watch(
   storeCards,
   (newCards) => {
-    const sameIds =
-      localCards.value.length === newCards.length &&
-      localCards.value.every((c, i) => c.id === newCards[i]?.id)
-    if (!sameIds) {
-      localCards.value = [...newCards]
+    const oldJson = JSON.stringify(localCards.value)
+    const newJson = JSON.stringify(newCards)
+    if (oldJson !== newJson) {
+      localCards.value = newCards.map((c) => ({ ...c }))
     }
   },
-  { immediate: true },
+  { immediate: true, deep: true },
 )
 
 const allColumns = computed(() => store.columns)
@@ -162,22 +233,14 @@ async function handleMove(event: Event) {
 
 async function handleDeleteDetail() {
   if (selectedCard.value) {
-    await store.deleteCard(selectedCard.value.id)
-    selectedCard.value = null
+    openConfirmCard(selectedCard.value)
   }
 }
 
 async function handleDeleteColumn() {
-  if (
-    confirm(
-      `Удалить колонку «${props.column.title}»? Все задачи в ней будут потеряны.`,
-    )
-  ) {
-    await store.deleteColumn(props.column.id)
-  }
+  openConfirmColumn()
 }
 
-// ===== Контекстное меню =====
 function handleContextMenu(event: MouseEvent, card: Card) {
   event.preventDefault()
   contextMenuCard.value = card
@@ -207,9 +270,7 @@ async function handleContextAction(action: ContextMenuAction) {
       await store.updateCard(card.id, { priority: 'high' })
       break
     case 'delete':
-      if (confirm(`Удалить задачу «${card.title}»?`)) {
-        await store.deleteCard(card.id)
-      }
+      openConfirmCard(card)
       break
   }
   contextMenuCard.value = null
