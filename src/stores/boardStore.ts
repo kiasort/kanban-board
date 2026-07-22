@@ -25,111 +25,110 @@ export const useBoardStore = defineStore('board', () => {
     }
   }
 
-  // ===== ДОСКИ =====
-async function createBoard(data: { title: string; description: string }) {
-  try {
-    // 1. Создаём саму доску
-    const newBoard = await boardsApi.create(data)
-    boards.value.push(newBoard)
+    async function createBoard(data: { title: string; description: string }) {
+    try {
+      // 1. Создаём саму доску
+      const newBoard = await boardsApi.create(data)
+      boards.value.push(newBoard)
 
-    // 2. Создаём три дефолтные колонки последовательно,
-    //    чтобы получить корректные id из ответа сервера.
-    const columnTitles = ['To Do', 'In Progress', 'Done']
-    const createdColumns: Column[] = []
-    for (let i = 0; i < columnTitles.length; i++) {
-      const col = await columnsApi.create({
-        boardId: newBoard.id,
-        title: columnTitles[i]!,
-        order: i + 1,
-      })
-      createdColumns.push(col)
+      // 2. Создаём три дефолтные колонки последовательно,
+      //    чтобы получить корректные id из ответа сервера.
+      const columnTitles = ['To Do', 'In Progress', 'Done']
+      const createdColumns: Column[] = []
+      for (let i = 0; i < columnTitles.length; i++) {
+        const col = await columnsApi.create({
+          boardId: newBoard.id,
+          title: columnTitles[i]!,
+          order: i + 1,
+        })
+        createdColumns.push(col)
+      }
+      columns.value.push(...createdColumns)
+      columns.value.sort((a, b) => a.order - b.order)
+
+      // 3. Безопасно достаём id колонок (без TS-варнинга "возможно undefined")
+      const todoColumn = createdColumns.find((c) => c.title === 'To Do')
+      const progressColumn = createdColumns.find((c) => c.title === 'In Progress')
+      const doneColumn = createdColumns.find((c) => c.title === 'Done')
+
+      // 4. Нейтральные демо-задачи — по паре в каждую колонку,
+      //    БЕЗ упоминаний TS / фреймворков.
+      const sampleCards: Array<{
+        columnId: number
+        title: string
+        description: string
+        priority: 'low' | 'medium' | 'high'
+      }> = [
+        // To Do
+        ...(todoColumn
+          ? [
+              {
+                columnId: todoColumn.id,
+                title: 'Проверить почту',
+                description: 'Рабочая почта example@gmail.com',
+                priority: 'medium' as const,
+              },
+              {
+                columnId: todoColumn.id,
+                title: 'Выгулять пса',
+                description: '',
+                priority: 'low' as const,
+              },
+              {
+                columnId: todoColumn.id,
+                title: 'Купить продукты на неделю',
+                description: 'Молоко, хлеб, овощи, фрукты.',
+                priority: 'high' as const,
+              },
+            ]
+          : []),
+        // In Progress
+        ...(progressColumn
+          ? [
+              {
+                columnId: progressColumn.id,
+                title: 'Приготовить ужин',
+                description: 'Паста с овощами и курицей.',
+                priority: 'medium' as const,
+              },
+              {
+                columnId: progressColumn.id,
+                title: 'Разобрать шкаф в спальне',
+                description: 'Отсортировать вещи на «оставить», «отдать», «выбросить».',
+                priority: 'high' as const,
+              },
+            ]
+          : []),
+        // Done
+        ...(doneColumn
+          ? [
+              {
+                columnId: doneColumn.id,
+                title: 'Оплатить коммунальные счета',
+                description: '',
+                priority: 'high' as const,
+              },
+              {
+                columnId: doneColumn.id,
+                title: 'Записаться на приём к врачу',
+                description: 'Терапевт, ежегодный чекап.',
+                priority: 'medium' as const,
+              },
+            ]
+          : []),
+      ]
+
+      // 5. Создаём карточки по одной, чтобы получить корректные id.
+      for (const card of sampleCards) {
+        const newCard = await cardsApi.create(card)
+        cards.value.push(newCard)
+      }
+
+      return newBoard
+    } catch (e) {
+      error.value = e instanceof Error ? e.message : 'Ошибка создания доски'
     }
-    columns.value.push(...createdColumns)
-    columns.value.sort((a, b) => a.order - b.order)
-
-    // 3. Безопасно достаём id колонок (без TS-варнинга "возможно undefined")
-    const todoColumn = createdColumns.find((c) => c.title === 'To Do')
-    const progressColumn = createdColumns.find((c) => c.title === 'In Progress')
-    const doneColumn = createdColumns.find((c) => c.title === 'Done')
-
-    // 4. Нейтральные демо-задачи — по одной-две в каждую колонку,
-    //    БЕЗ упоминаний TS / фреймворков.
-    const sampleCards: Array<{
-      columnId: number
-      title: string
-      description: string
-      priority: 'low' | 'medium' | 'high'
-    }> = [
-      // To Do
-      ...(todoColumn
-        ? [
-            {
-              columnId: todoColumn.id,
-              title: 'Проверить почту',
-              description: 'Рабочая почта example@gmail.com',
-              priority: 'medium' as const,
-            },
-            {
-              columnId: todoColumn.id,
-              title: 'Выгулять пса',
-              description: '',
-              priority: 'low' as const,
-            },
-            {
-              columnId: todoColumn.id,
-              title: 'Купить продукты на неделю',
-              description: 'Молоко, хлеб, овощи, фрукты.',
-              priority: 'high' as const,
-            },
-          ]
-        : []),
-      // In Progress
-      ...(progressColumn
-        ? [
-            {
-              columnId: progressColumn.id,
-              title: 'Приготовить ужин',
-              description: 'Паста с овощами и курицей.',
-              priority: 'medium' as const,
-            },
-            {
-              columnId: progressColumn.id,
-              title: 'Разобрать шкаф в спальне',
-              description: 'Отсортировать вещи на «оставить», «отдать», «выбросить».',
-              priority: 'high' as const,
-            },
-          ]
-        : []),
-      // Done
-      ...(doneColumn
-        ? [
-            {
-              columnId: doneColumn.id,
-              title: 'Оплатить коммунальные счета',
-              description: '',
-              priority: 'high' as const,
-            },
-            {
-              columnId: doneColumn.id,
-              title: 'Записаться на приём к врачу',
-              description: 'Терапевт, ежегодный чекап.',
-              priority: 'medium' as const,
-            },
-          ]
-        : []),
-    ]
-
-    // 5. Создаём карточки по одной, чтобы получить корректные id.
-    for (const card of sampleCards) {
-      const newCard = await cardsApi.create(card)
-      cards.value.push(newCard)
-    }
-
-    return newBoard
-  } catch (e) {
-    error.value = e instanceof Error ? e.message : 'Ошибка создания доски'
   }
-}
 
   async function deleteBoard(id: number) {
     try {
