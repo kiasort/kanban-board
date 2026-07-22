@@ -25,7 +25,7 @@ export const useBoardStore = defineStore('board', () => {
     }
   }
 
-    async function createBoard(data: { title: string; description: string }) {
+  async function createBoard(data: { title: string; description: string }) {
     try {
       // 1. Создаём саму доску
       const newBoard = await boardsApi.create(data)
